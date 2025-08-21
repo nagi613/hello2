@@ -6,42 +6,13 @@
   <title>趣味紹介</title>
   <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      cursor: url(https://cur.cursors-4u.net/games/gam-10/gam987.ani),
-              url(https://cur.cursors-4u.net/games/gam-10/gam987.png), auto !important;
-    }
-
+    /* 全体 */
     body {
       font-family: 'Zen Kaku Gothic New', sans-serif;
       background: linear-gradient(to right, #dff9fb, #74b9ff);
       margin: 0;
       padding: 0;
       color: #2d3436;
-      animation: fadeInBody 1s ease-in;
-    }
-
-    @keyframes fadeInBody {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    #cursor {
-      width: 20px;
-      height: 20px;
-      border: 2px solid #0984e3;
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s ease;
-    }
-
-    #bg-rain {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
     }
 
     header {
@@ -50,8 +21,6 @@
       text-align: center;
       color: white;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      position: relative;
-      overflow: hidden;
     }
 
     header h1 {
@@ -59,34 +28,11 @@
       margin-bottom: 0.5rem;
     }
 
-    header::after {
-      content: "";
-      position: absolute;
-      bottom: -10px;
-      left: 0;
-      width: 100%;
-      height: 30px;
-      background: radial-gradient(circle, #74b9ff 20%, transparent 21%);
-      background-size: 30px 30px;
-      animation: wave 3s infinite linear;
-    }
-
-    @keyframes wave {
-      0% { background-position: 0 0; }
-      100% { background-position: 30px 0; }
-    }
-
     main {
       max-width: 900px;
       margin: 3rem auto;
       padding: 2rem;
-      animation: fadeInMain 1s ease-in-out;
       text-align: center;
-    }
-
-    @keyframes fadeInMain {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     h2 {
@@ -96,36 +42,32 @@
       margin-bottom: 1.5rem;
     }
 
-    /* ★ 横スクロール写真ギャラリー */
+    /* ★ 写真ギャラリー（横スクロール・固定サイズ） */
     .main-img-frame {
       display: flex;
-      gap: 20px;
       overflow-x: auto;
-      padding: 1rem 0;
-      white-space: nowrap;
-
-      /* スクロールバー非表示 */
-      -ms-overflow-style: none;  /* IE・Edge */
-      scrollbar-width: none;     /* Firefox */
-    }
-    .main-img-frame::-webkit-scrollbar {
-      display: none;             /* Chrome, Safari, Opera */
+      gap: 20px;
+      padding-bottom: 10px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
     }
 
     .main-img-frame img {
-      width: 300px; /* 写真の大きさ固定 */
-      height: auto;
+      width: 300px;
+      height: 200px;
+      object-fit: cover;
       border-radius: 8px;
       box-shadow: 4px 6px 15px rgba(0,0,0,0.3);
-      transform: rotate(-1deg);
+      scroll-snap-align: start;
       transition: transform 0.3s ease;
       flex-shrink: 0;
     }
 
     .main-img-frame img:hover {
-      transform: scale(1.05) rotate(0deg);
+      transform: scale(1.05);
     }
 
+    /* カード */
     .hobby-list {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -137,29 +79,20 @@
       padding: 1rem;
       border-radius: 16px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 0.6s ease forwards;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
-    }
-
-    .card:nth-child(1) { animation-delay: 0s; }
-    .card:nth-child(2) { animation-delay: 0.3s; }
-
-    @keyframes fadeInUp {
-      to { opacity: 1; transform: translateY(0); }
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     }
 
     .card:hover {
       transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.15);
       background-color: #dfefff;
     }
 
     .card img {
-      max-width: 100%;
-      height: auto;
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
       border-radius: 12px;
       margin-top: 1rem;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -170,6 +103,7 @@
       line-height: 1.6;
     }
 
+    /* ボタン */
     .neon-btn {
       display: inline-block;
       padding: 0.8rem 1.5rem;
@@ -188,34 +122,9 @@
       background-color: #74b9ff;
       color: white;
       box-shadow: 0 0 20px #74b9ff, 0 0 40px #74b9ff;
-      cursor: pointer;
     }
 
-    section:last-of-type {
-      margin-top: 4rem;
-      text-align: center;
-      font-size: 1.2rem;
-    }
-
-    footer {
-      text-align: center;
-      font-size: 0.9rem;
-      color: #555;
-      background-color: #f0f0f0;
-      padding: 1.5rem;
-      margin-top: 4rem;
-      border-top: 1px solid #ccc;
-    }
-
-    @media (max-width: 768px) {
-      .hobby-list {
-        grid-template-columns: 1fr;
-      }
-      .main-img-frame img {
-        width: 80%;
-      }
-    }
-
+    /* モーダル */
     .modal {
       display: none;
       position: fixed;
@@ -228,13 +137,18 @@
     }
 
     .modal-content {
-      background-color: white;
+      background-color: #ffffff;
       margin: 10% auto;
       padding: 2rem;
       border-radius: 10px;
       width: 80%;
       max-width: 500px;
       position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .modal-content h2 {
+      color: #0984e3;
     }
 
     .close {
@@ -245,12 +159,47 @@
       cursor: pointer;
       color: #aaa;
     }
+
+    .close:hover {
+      color: #0984e3;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #555;
+      background-color: #f0f0f0;
+      padding: 1.5rem;
+      margin-top: 4rem;
+      border-top: 1px solid #ccc;
+    }
+
+    /* スクロールバー */
+    ::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #0984e3;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: #74b9ff;
+    }
+
+    @media (max-width: 768px) {
+      .hobby-list {
+        grid-template-columns: 1fr;
+      }
+      .main-img-frame img {
+        width: 80%;
+        height: auto;
+      }
+    }
   </style>
 </head>
 <body>
-
-<canvas id="bg-rain"></canvas>
-<div id="cursor"></div>
 
 <header>
   <h1>私の趣味紹介</h1>
@@ -261,7 +210,7 @@
   <!-- 写真ギャラリー -->
   <div class="main-img-frame">
     <img src="写真/雨晴.jpg" alt="雨晴海岸">
-    <img src="写真/ジブリ展.jpg" alt="フェス">
+    <img src="写真/ジブリ展.jpg" alt="ジブリ展">
     <img src="写真/渚紹介.jpg" alt="映画">
   </div>
 
@@ -295,6 +244,7 @@
   © 2025 渚の趣味サイト | おしゃれにしてみました！
 </footer>
 
+<!-- モーダル -->
 <div class="modal" id="modal1">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -319,88 +269,17 @@
       document.getElementById(modalId).style.display = 'block';
     });
   });
+
   document.querySelectorAll('.close').forEach(btn => {
     btn.addEventListener('click', () => {
       btn.closest('.modal').style.display = 'none';
     });
   });
+
   window.addEventListener('click', e => {
     if (e.target.classList.contains('modal')) {
       e.target.style.display = 'none';
     }
-  });
-
-  // マウスストーカー
-  const cursor = document.getElementById('cursor');
-  window.addEventListener('mousemove', e => {
-    cursor.style.left = `${e.clientX}px`;
-    cursor.style.top = `${e.clientY}px`;
-  });
-
-  // 雨＋波紋アニメーション
-  const canvas = document.getElementById("bg-rain");
-  const ctx = canvas.getContext("2d");
-  let W = window.innerWidth;
-  let H = window.innerHeight;
-  canvas.width = W;
-  canvas.height = H;
-  const drops = [];
-  const ripples = [];
-
-  for (let i = 0; i < 150; i++) {
-    drops.push({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      l: Math.random() * 1 + 1,
-      xs: 0,
-      ys: Math.random() * 4 + 4,
-    });
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    ctx.strokeStyle = "#74b9ff";
-    ctx.lineWidth = 1;
-    ctx.lineCap = "round";
-
-    for (let i = 0; i < drops.length; i++) {
-      let d = drops[i];
-      ctx.beginPath();
-      ctx.moveTo(d.x, d.y);
-      ctx.lineTo(d.x + d.xs, d.y + d.l * d.ys);
-      ctx.stroke();
-    }
-
-    for (let i = 0; i < drops.length; i++) {
-      let d = drops[i];
-      d.y += d.ys;
-      if (d.y > H) {
-        d.y = -20;
-        d.x = Math.random() * W;
-        ripples.push({ x: d.x, y: H - 2, r: 0 });
-      }
-    }
-
-    ctx.strokeStyle = "rgba(116,185,255,0.4)";
-    for (let i = 0; i < ripples.length; i++) {
-      const ripple = ripples[i];
-      ripple.r += 1;
-      ctx.beginPath();
-      ctx.arc(ripple.x, ripple.y, ripple.r, 0, Math.PI * 2);
-      ctx.stroke();
-      if (ripple.r > 20) ripples.splice(i--, 1);
-    }
-
-    requestAnimationFrame(draw);
-  }
-
-  draw();
-
-  window.addEventListener("resize", () => {
-    W = window.innerWidth;
-    H = window.innerHeight;
-    canvas.width = W;
-    canvas.height = H;
   });
 </script>
 
