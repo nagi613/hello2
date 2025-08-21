@@ -10,7 +10,6 @@
       cursor: url(https://cur.cursors-4u.net/games/gam-10/gam987.ani),
               url(https://cur.cursors-4u.net/games/gam-10/gam987.png), auto !important;
     }
-    /* 全体 */
     body {
       font-family: 'Zen Kaku Gothic New', sans-serif;
       background: linear-gradient(to right, #dff9fb, #74b9ff);
@@ -27,26 +26,10 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
-    header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-    }
+    header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    main { max-width: 900px; margin: 3rem auto; padding: 2rem; text-align: center; }
+    h2 { color: #0984e3; border-bottom: 2px solid #0984e3; padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
 
-    main {
-      max-width: 900px;
-      margin: 3rem auto;
-      padding: 2rem;
-      text-align: center;
-    }
-
-    h2 {
-      color: #0984e3;
-      border-bottom: 2px solid #0984e3;
-      padding-bottom: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    /* ★ 写真ギャラリー（横スクロール・固定サイズ） */
     .main-img-frame {
       display: flex;
       overflow-x: auto;
@@ -57,8 +40,7 @@
     }
 
     .main-img-frame img {
-      width: 300px;
-      height: 200px;
+      width: 300px; height: 200px;
       object-fit: cover;
       border-radius: 8px;
       box-shadow: 4px 6px 15px rgba(0,0,0,0.3);
@@ -67,11 +49,8 @@
       flex-shrink: 0;
     }
 
-    .main-img-frame img:hover {
-      transform: scale(1.05);
-    }
+    .main-img-frame img:hover { transform: scale(1.05); }
 
-    /* カード */
     .hobby-list {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -94,20 +73,15 @@
     }
 
     .card img {
-      width: 100%;
-      height: 150px;
+      width: 100%; height: 150px;
       object-fit: cover;
       border-radius: 12px;
       margin-top: 1rem;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
-    .card p {
-      margin-top: 0.5rem;
-      line-height: 1.6;
-    }
+    .card p { margin-top: 0.5rem; line-height: 1.6; }
 
-    /* ボタン */
     .neon-btn {
       display: inline-block;
       padding: 0.8rem 1.5rem;
@@ -128,7 +102,6 @@
       box-shadow: 0 0 20px #74b9ff, 0 0 40px #74b9ff;
     }
 
-    /* モーダル */
     .modal {
       display: none;
       position: fixed;
@@ -151,10 +124,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    .modal-content h2 {
-      color: #0984e3;
-    }
-
+    .modal-content h2 { color: #0984e3; }
     .close {
       position: absolute;
       top: 0.5rem;
@@ -163,10 +133,7 @@
       cursor: pointer;
       color: #aaa;
     }
-
-    .close:hover {
-      color: #0984e3;
-    }
+    .close:hover { color: #0984e3; }
 
     footer {
       text-align: center;
@@ -178,28 +145,13 @@
       border-top: 1px solid #ccc;
     }
 
-    /* スクロールバー */
-    ::-webkit-scrollbar {
-      height: 8px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background-color: #0984e3;
-      border-radius: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background-color: #74b9ff;
-    }
+    ::-webkit-scrollbar { height: 8px; }
+    ::-webkit-scrollbar-thumb { background-color: #0984e3; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background-color: #74b9ff; }
 
     @media (max-width: 768px) {
-      .hobby-list {
-        grid-template-columns: 1fr;
-      }
-      .main-img-frame img {
-        width: 80%;
-        height: auto;
-      }
+      .hobby-list { grid-template-columns: 1fr; }
+      .main-img-frame img { width: 80%; height: auto; }
     }
   </style>
 </head>
@@ -220,10 +172,9 @@
     <img src="写真/ミリオン１.jpg" alt="フェス２">
   </div>
 
-  
-
+  <!-- 趣味セクション -->
   <section>
-    <h2>趣味/h2>
+    <h2>趣味</h2>
     <div class="hobby-list">
       <div class="card" data-modal="modal1">
         <h2>映画鑑賞</h2>
@@ -240,6 +191,21 @@
     </div>
     <div style="text-align:center;">
       <a href="#more" class="neon-btn">もっと見る</a>
+    </div>
+  </section>
+
+  <!-- 検定・資格セクション -->
+  <section>
+    <h2>検定・資格</h2>
+    <div class="hobby-list">
+      <div class="card" data-modal="modal3">
+        <h2>取得済み</h2>
+        <p>・G検定<br>・基本情報技術者試験<br>・AI検定</p>
+      </div>
+      <div class="card" data-modal="modal4">
+        <h2>勉強中</h2>
+        <p>・応用情報技術者試験</p>
+      </div>
     </div>
   </section>
 
@@ -270,12 +236,28 @@
   </div>
 </div>
 
+<div class="modal" id="modal3">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>取得済み検定</h2>
+    <p>・G検定：AIの基礎知識を学びました。<br>・基本情報技術者試験：IT基礎力取得済み。<br>・AI検定：AIの基礎理論と活用法を学習済み。</p>
+  </div>
+</div>
+
+<div class="modal" id="modal4">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>勉強中の試験</h2>
+    <p>・応用情報技術者試験：現在勉強中で、アルゴリズムやネットワークなどのスキルを磨いています。</p>
+  </div>
+</div>
+
 <script>
   // モーダル表示
   document.querySelectorAll('.card').forEach(card => {
     card.addEventListener('click', () => {
       const modalId = card.getAttribute('data-modal');
-      document.getElementById(modalId).style.display = 'block';
+      if(modalId) document.getElementById(modalId).style.display = 'block';
     });
   });
 
@@ -294,8 +276,3 @@
 
 </body>
 </html>
-
-
-
-
-
