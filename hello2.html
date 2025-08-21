@@ -20,7 +20,10 @@
       animation: fadeInBody 1s ease-in;
     }
 
-    @keyframes fadeInBody { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeInBody {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
     #cursor {
       width: 20px;
@@ -51,7 +54,10 @@
       overflow: hidden;
     }
 
-    header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
 
     header::after {
       content: "";
@@ -65,7 +71,10 @@
       animation: wave 3s infinite linear;
     }
 
-    @keyframes wave { 0% { background-position: 0 0; } 100% { background-position: 30px 0; } }
+    @keyframes wave {
+      0% { background-position: 0 0; }
+      100% { background-position: 30px 0; }
+    }
 
     main {
       max-width: 900px;
@@ -75,7 +84,10 @@
       text-align: center;
     }
 
-    @keyframes fadeInMain { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInMain {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     h2 {
       color: #0984e3;
@@ -84,27 +96,34 @@
       margin-bottom: 1.5rem;
     }
 
-    /* 写真ギャラリー */
+    /* ★ 横スクロール写真ギャラリー */
     .main-img-frame {
+      display: flex;
+      gap: 20px;
       overflow-x: auto;
-      white-space: nowrap;
       padding: 1rem 0;
-      margin: 2rem 0;
+      white-space: nowrap;
+
+      /* スクロールバー非表示 */
+      -ms-overflow-style: none;  /* IE・Edge */
+      scrollbar-width: none;     /* Firefox */
+    }
+    .main-img-frame::-webkit-scrollbar {
+      display: none;             /* Chrome, Safari, Opera */
     }
 
     .main-img-frame img {
-      display: inline-block;
-      width: 300px;
-      height: 200px;
-      object-fit: cover;
-      margin-right: 20px;
+      width: 300px; /* 写真の大きさ固定 */
+      height: auto;
       border-radius: 8px;
       box-shadow: 4px 6px 15px rgba(0,0,0,0.3);
+      transform: rotate(-1deg);
       transition: transform 0.3s ease;
+      flex-shrink: 0;
     }
 
     .main-img-frame img:hover {
-      transform: scale(1.05);
+      transform: scale(1.05) rotate(0deg);
     }
 
     .hobby-list {
@@ -128,11 +147,13 @@
     .card:nth-child(1) { animation-delay: 0s; }
     .card:nth-child(2) { animation-delay: 0.3s; }
 
-    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     .card:hover {
       transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
       background-color: #dfefff;
     }
 
@@ -144,7 +165,10 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
-    .card p { margin-top: 0.5rem; line-height: 1.6; }
+    .card p {
+      margin-top: 0.5rem;
+      line-height: 1.6;
+    }
 
     .neon-btn {
       display: inline-block;
@@ -155,7 +179,7 @@
       border-radius: 8px;
       font-weight: bold;
       text-decoration: none;
-      box-shadow: 0 0 10px rgba(116, 185, 255,0.5);
+      box-shadow: 0 0 10px rgba(116, 185, 255, 0.5);
       transition: all 0.3s ease;
       margin-top: 2rem;
     }
@@ -167,7 +191,11 @@
       cursor: pointer;
     }
 
-    section:last-of-type { margin-top: 4rem; text-align: center; font-size: 1.2rem; }
+    section:last-of-type {
+      margin-top: 4rem;
+      text-align: center;
+      font-size: 1.2rem;
+    }
 
     footer {
       text-align: center;
@@ -180,8 +208,12 @@
     }
 
     @media (max-width: 768px) {
-      .hobby-list { grid-template-columns: 1fr; }
-      .main-img-frame img { width: 80%; height: auto; margin-right: 15px; }
+      .hobby-list {
+        grid-template-columns: 1fr;
+      }
+      .main-img-frame img {
+        width: 80%;
+      }
     }
 
     .modal {
@@ -229,10 +261,8 @@
   <!-- 写真ギャラリー -->
   <div class="main-img-frame">
     <img src="写真/雨晴.jpg" alt="雨晴海岸">
-    <img src="写真/ジブリ展.jpg" alt="ジブリ展">
-    <img src="写真/渚紹介.jpg" alt="渚紹介">
-    <img src="写真/フェス.jpg" alt="フェス">
-    <img src="写真/映画.jpg" alt="映画">
+    <img src="写真/ジブリ展.jpg" alt="フェス">
+    <img src="写真/渚紹介.jpg" alt="映画">
   </div>
 
   <section>
@@ -295,7 +325,9 @@
     });
   });
   window.addEventListener('click', e => {
-    if (e.target.classList.contains('modal')) e.target.style.display = 'none';
+    if (e.target.classList.contains('modal')) {
+      e.target.style.display = 'none';
+    }
   });
 
   // マウスストーカー
@@ -316,7 +348,13 @@
   const ripples = [];
 
   for (let i = 0; i < 150; i++) {
-    drops.push({ x: Math.random() * W, y: Math.random() * H, l: Math.random() * 1 + 1, xs: 0, ys: Math.random() * 4 + 4 });
+    drops.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      l: Math.random() * 1 + 1,
+      xs: 0,
+      ys: Math.random() * 4 + 4,
+    });
   }
 
   function draw() {
