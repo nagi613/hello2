@@ -1,49 +1,89 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>趣味紹介</title>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  * { box-sizing: border-box; cursor: url(https://cur.cursors-4u.net/games/gam-10/gam987.ani), url(https://cur.cursors-4u.net/games/gam-10/gam987.png), auto !important; }
-  body { font-family: 'Zen Kaku Gothic New', sans-serif; background: linear-gradient(to right, #dff9fb, #74b9ff); margin:0; padding:0; color:#2d3436; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>趣味紹介</title>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      background: linear-gradient(to right, #dff9fb, #74b9ff);
+      margin: 0;
+      padding: 0;
+      color: #2d3436;
+    }
 
-  #cursor { width:20px; height:20px; border:2px solid #0984e3; border-radius:50%; position:fixed; pointer-events:none; z-index:9999; transform:translate(-50%, -50%); transition:transform 0.1s ease; }
+    header {
+      background-color: #74b9ff;
+      padding: 3rem 1rem;
+      text-align: center;
+      color: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
 
-  header { background-color:#74b9ff; padding:3rem 1rem; text-align:center; color:white; position:relative; overflow:hidden; }
-  header h1 { font-size:2.5rem; margin-bottom:0.5rem; }
-  header::after { content:""; position:absolute; bottom:-10px; left:0; width:100%; height:30px; background: radial-gradient(circle, #74b9ff 20%, transparent 21%); background-size:30px 30px; animation: wave 3s infinite linear; }
-  @keyframes wave { 0%{background-position:0 0;} 100%{background-position:30px 0;} }
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
 
-  main { max-width:900px; margin:3rem auto; padding:2rem; text-align:center; }
-  h2 { color:#0984e3; border-bottom:2px solid #0984e3; padding-bottom:0.5rem; margin-bottom:1.5rem; }
+    main {
+      max-width: 1000px;
+      margin: 3rem auto;
+      padding: 2rem;
+      text-align: center;
+    }
 
-  /* 横スライダー */
-  .main-img-slider { overflow:hidden; width:100%; margin:2rem 0; position:relative; }
-  .main-img-track { display:flex; gap:2rem; cursor:grab; user-select:none; transition: transform 0.3s ease; }
-  .main-img-frame { flex:0 0 auto; padding:12px; background:#fff; border:4px solid #ddd; border-radius:8px; box-shadow:4px 6px 15px rgba(0,0,0,0.3); transform:rotate(-2deg); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-  .main-img-frame img { max-width:200px; height:auto; border-radius:4px; display:block; transition: transform 0.3s ease; }
-  .main-img-frame:hover { transform:rotate(0deg) scale(1.05); box-shadow:0 12px 24px rgba(0,0,0,0.3); }
-  .main-img-frame:hover img { transform: scale(1.05); }
+    h2 {
+      color: #0984e3;
+      border-bottom: 2px solid #0984e3;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
 
-  /* 趣味カード */
-  .hobby-list { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
-  .card { background-color:#fff; padding:1rem; border-radius:16px; box-shadow:0 4px 12px rgba(0,0,0,0.1); cursor:pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-  .card:hover { transform:translateY(-8px) scale(1.02); box-shadow:0 10px 24px rgba(0,0,0,0.15); background-color:#dfefff; }
-  .card img { max-width:100%; height:auto; border-radius:12px; margin-top:1rem; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+    /* ★ 写真を横並びに配置 */
+    .photo-row {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap; /* スマホで折り返す */
+      margin-bottom: 3rem;
+    }
 
-  .modal { display:none; position:fixed; z-index:100; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); }
-  .modal-content { background:white; margin:10% auto; padding:2rem; border-radius:10px; width:80%; max-width:500px; position:relative; }
-  .close { position:absolute; top:0.5rem; right:1rem; font-size:1.8rem; cursor:pointer; color:#aaa; }
+    /* ★ 写真立て風の枠 */
+    .main-img-frame {
+      padding: 12px;
+      background: #fff;
+      border: 4px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 4px 6px 15px rgba(0,0,0,0.3);
+      transform: rotate(-2deg);
+    }
 
-  footer { text-align:center; font-size:0.9rem; color:#555; background:#f0f0f0; padding:1.5rem; margin-top:4rem; border-top:1px solid #ccc; }
+    .main-img-frame img {
+      max-width: 200px;
+      height: auto;
+      border-radius: 4px;
+      display: block;
+    }
 
-  @media(max-width:768px){ .hobby-list{grid-template-columns:1fr;} .main-img-frame img{max-width:80%;} }
-</style>
+    /* ★ 交互に少し傾けて遊び心を */
+    .main-img-frame:nth-child(even) {
+      transform: rotate(2deg);
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #555;
+      background-color: #f0f0f0;
+      padding: 1.5rem;
+      margin-top: 4rem;
+      border-top: 1px solid #ccc;
+    }
+  </style>
 </head>
 <body>
-<div id="cursor"></div>
 
 <header>
   <h1>私の趣味紹介</h1>
@@ -51,115 +91,28 @@
 </header>
 
 <main>
-  <!-- 横スライダー -->
-  <div class="main-img-slider">
-    <div class="main-img-track" id="sliderTrack">
-      <div class="main-img-frame" data-description="雨晴海岸の美しい景色です。"><img src="写真/雨晴.jpg" alt="雨晴海岸"></div>
-      <div class="main-img-frame" data-description="音楽フェスで友達と盛り上がった写真です。"><img src="写真/フェスふぉと.jpg" alt="フェス"></div>
-      <div class="main-img-frame" data-description="映画館で見たお気に入りの映画ポスターです。"><img src="写真/へレディタリー.png" alt="映画"></div>
-      <div class="main-img-frame" data-description="青い海で撮った写真です。"><img src="写真/雨晴.jpg" alt="海"></div>
-      <div class="main-img-frame" data-description="山や自然の景色の写真です。"><img src="写真/フェスふぉと.jpg" alt="風景"></div>
+  <!-- 写真を横一列に表示（雨晴・フェス・映画） -->
+  <div class="photo-row">
+    <div class="main-img-frame">
+      <img src="写真/雨晴.jpg" alt="雨晴海岸の写真">
+    </div>
+    <div class="main-img-frame">
+      <img src="写真/フェス.jpg" alt="フェスの写真">
+    </div>
+    <div class="main-img-frame">
+      <img src="写真/映画.jpg" alt="映画の写真">
     </div>
   </div>
 
   <section>
     <h2>趣味一覧</h2>
-    <div class="hobby-list">
-      <div class="card" data-modal="modal1">
-        <h2>映画鑑賞</h2>
-        <p>特に洋画のホラー映画が好きです。</p>
-        <img src="写真/へレディタリー.png" alt="ホラー映画">
-        <img src="写真/シャイニング.jpg" alt="ホラー映画">
-      </div>
-      <div class="card" data-modal="modal2">
-        <h2>フェス参戦</h2>
-        <p>音楽フェスに行って盛り上がるのが最高です！</p>
-        <img src="写真/フェスふぉと.jpg" alt="フェス">
-      </div>
-    </div>
+    <p>ここに趣味カードを追加できます。</p>
   </section>
 </main>
 
 <footer>
-  © 2025 渚の趣味サイト
+  © 2025 渚の趣味サイト | おしゃれにしてみました！
 </footer>
 
-<!-- モーダル -->
-<div class="modal" id="modal1">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>映画鑑賞について</h2>
-    <p>洋画ホラーの中でもA24の作品が大好き！何度見ても飽きません。</p>
-  </div>
-</div>
-<div class="modal" id="modal2">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>フェス参戦について</h2>
-    <p>友達と行く音楽フェスやライブは最高の思い出です。</p>
-  </div>
-</div>
-
-<div class="modal" id="photoModal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <p id="photoDescription"></p>
-  </div>
-</div>
-
-<script>
-  // カーソル
-  const cursor = document.getElementById('cursor');
-  window.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
-
-  // 趣味カードモーダル
-  document.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('click', () => {
-      const modal = document.getElementById(card.dataset.modal);
-      modal.style.display='block';
-    });
-  });
-
-  // 写真説明モーダル
-  document.querySelectorAll('.main-img-frame').forEach(frame=>{
-    frame.addEventListener('click', ()=>{
-      document.getElementById('photoDescription').textContent = frame.dataset.description;
-      document.getElementById('photoModal').style.display='block';
-    });
-  });
-
-  // モーダル閉じる
-  document.querySelectorAll('.close').forEach(btn=>{
-    btn.addEventListener('click', ()=>btn.closest('.modal').style.display='none');
-  });
-  window.addEventListener('click', e=>{ if(e.target.classList.contains('modal')) e.target.style.display='none'; });
-
-  // スライダー自動ループ＋ドラッグ対応
-  const track = document.getElementById('sliderTrack');
-  // 複製してループ用
-  track.innerHTML += track.innerHTML;
-
-  let scrollPos = 0, speed = 0.5;
-  function loopScroll(){
-    scrollPos += speed;
-    if(scrollPos >= track.scrollWidth / 2) scrollPos = 0;
-    track.scrollLeft = scrollPos;
-    requestAnimationFrame(loopScroll);
-  }
-  loopScroll();
-
-  // ドラッグ
-  let isDown = false, startX, scrollLeft;
-  track.addEventListener('mousedown', e=>{ isDown=true; startX=e.pageX - track.offsetLeft; scrollLeft=track.scrollLeft; track.style.cursor='grabbing'; });
-  track.addEventListener('mouseup', ()=>{ isDown=false; track.style.cursor='grab'; });
-  track.addEventListener('mouseleave', ()=>{ isDown=false; track.style.cursor='grab'; });
-  track.addEventListener('mousemove', e=>{
-    if(!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - track.offsetLeft;
-    const walk = (x - startX) * 2;
-    track.scrollLeft = scrollLeft - walk;
-  });
-</script>
 </body>
 </html>
