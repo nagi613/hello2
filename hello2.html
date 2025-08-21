@@ -81,6 +81,7 @@
       margin: 3rem auto;
       padding: 2rem;
       animation: fadeInMain 1s ease-in-out;
+      text-align: center;
     }
 
     @keyframes fadeInMain {
@@ -95,14 +96,38 @@
       margin-bottom: 1.5rem;
     }
 
-    /* ★ 雨晴.jpg のスタイル */
-    .main-img {
-      display: block;
-      max-width: 60%;
+    /* ★ 写真立て風の枠 */
+    .main-img-frame {
+      display: inline-block;
+      padding: 12px;
+      background: #fff;
+      border: 4px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 4px 6px 15px rgba(0,0,0,0.3);
+      transform: rotate(-2deg); /* 少し傾けてリアル感 */
+      margin: 2rem auto;
+      position: relative;
+    }
+
+    .main-img-frame img {
+      max-width: 300px; /* 写真の大きさを固定気味に */
       height: auto;
-      margin: 0 auto 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 4px;
+      display: block;
+    }
+
+    /* ★ 写真立ての支え */
+    .main-img-frame::after {
+      content: "";
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%) rotate(8deg);
+      width: 60px;
+      height: 20px;
+      background: #555;
+      border-radius: 4px;
+      box-shadow: 2px 4px 8px rgba(0,0,0,0.4);
     }
 
     .hobby-list {
@@ -190,6 +215,9 @@
       .hobby-list {
         grid-template-columns: 1fr;
       }
+      .main-img-frame img {
+        max-width: 80%; /* スマホでは広めに */
+      }
     }
 
     .modal {
@@ -229,13 +257,16 @@
 <div id="cursor"></div>
 
 <header>
-  <h1>自己紹介</h1>
-  <p>どうも！天池渚です！このサイトでは私なぎさの趣味などを紹介していきます。</p>
+  <h1>私の趣味紹介</h1>
+  <p>私の好きなことを紹介します！</p>
 </header>
 
 <main>
-  <!-- 雨晴.jpg にクラス main-img を適用 -->
-  <img src="写真/雨晴.jpg" alt="雨晴海岸の写真" class="main-img">
+  <!-- 写真立て風に変更 -->
+  <div class="main-img-frame">
+    <img src="写真/雨晴.jpg" alt="雨晴海岸の写真">
+  </div>
+
   <section>
     <h2>趣味一覧</h2>
     <div class="hobby-list">
@@ -377,7 +408,3 @@
 
 </body>
 </html>
-
-
-
-
