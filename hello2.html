@@ -6,6 +6,11 @@
   <title>趣味紹介</title>
   <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    * {
+      cursor: url(https://cur.cursors-4u.net/games/gam-10/gam987.ani),
+              url(https://cur.cursors-4u.net/games/gam-10/gam987.png), auto !important;
+    }
+    /* 全体 */
     body {
       font-family: 'Zen Kaku Gothic New', sans-serif;
       background: linear-gradient(to right, #dff9fb, #74b9ff);
@@ -28,7 +33,7 @@
     }
 
     main {
-      max-width: 1000px;
+      max-width: 900px;
       margin: 3rem auto;
       padding: 2rem;
       text-align: center;
@@ -41,35 +46,126 @@
       margin-bottom: 1.5rem;
     }
 
-    /* ★ 写真を横並びに配置 */
-    .photo-row {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap; /* スマホで折り返す */
-      margin-bottom: 3rem;
-    }
-
-    /* ★ 写真立て風の枠 */
+    /* ★ 写真ギャラリー（横スクロール・固定サイズ） */
     .main-img-frame {
-      padding: 12px;
-      background: #fff;
-      border: 4px solid #ddd;
-      border-radius: 8px;
-      box-shadow: 4px 6px 15px rgba(0,0,0,0.3);
-      transform: rotate(-2deg);
+      display: flex;
+      overflow-x: auto;
+      gap: 20px;
+      padding-bottom: 10px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
     }
 
     .main-img-frame img {
-      max-width: 200px;
-      height: auto;
-      border-radius: 4px;
-      display: block;
+      width: 300px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 4px 6px 15px rgba(0,0,0,0.3);
+      scroll-snap-align: start;
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
     }
 
-    /* ★ 交互に少し傾けて遊び心を */
-    .main-img-frame:nth-child(even) {
-      transform: rotate(2deg);
+    .main-img-frame img:hover {
+      transform: scale(1.05);
+    }
+
+    /* カード */
+    .hobby-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .card {
+      background-color: #fff;
+      padding: 1rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+      background-color: #dfefff;
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-top: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .card p {
+      margin-top: 0.5rem;
+      line-height: 1.6;
+    }
+
+    /* ボタン */
+    .neon-btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      color: #74b9ff;
+      border: 2px solid #74b9ff;
+      background-color: transparent;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 10px rgba(116, 185, 255, 0.5);
+      transition: all 0.3s ease;
+      margin-top: 2rem;
+    }
+
+    .neon-btn:hover {
+      background-color: #74b9ff;
+      color: white;
+      box-shadow: 0 0 20px #74b9ff, 0 0 40px #74b9ff;
+    }
+
+    /* モーダル */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+    }
+
+    .modal-content {
+      background-color: #ffffff;
+      margin: 10% auto;
+      padding: 2rem;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 500px;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .modal-content h2 {
+      color: #0984e3;
+    }
+
+    .close {
+      position: absolute;
+      top: 0.5rem;
+      right: 1rem;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #aaa;
+    }
+
+    .close:hover {
+      color: #0984e3;
     }
 
     footer {
@@ -81,6 +177,30 @@
       margin-top: 4rem;
       border-top: 1px solid #ccc;
     }
+
+    /* スクロールバー */
+    ::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #0984e3;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: #74b9ff;
+    }
+
+    @media (max-width: 768px) {
+      .hobby-list {
+        grid-template-columns: 1fr;
+      }
+      .main-img-frame img {
+        width: 80%;
+        height: auto;
+      }
+    }
   </style>
 </head>
 <body>
@@ -91,22 +211,37 @@
 </header>
 
 <main>
-  <!-- 写真を横一列に表示（雨晴・フェス・映画） -->
-  <div class="photo-row">
-    <div class="main-img-frame">
-      <img src="写真/雨晴.jpg" alt="雨晴海岸の写真">
-    </div>
-    <div class="main-img-frame">
-      <img src="写真/フェス.jpg" alt="フェスの写真">
-    </div>
-    <div class="main-img-frame">
-      <img src="写真/映画.jpg" alt="映画の写真">
-    </div>
+  <!-- 写真ギャラリー -->
+  <h2>ギャラリー</h2>
+  <div class="main-img-frame">
+    <img src="写真/雨晴.jpg" alt="雨晴海岸">
+    <img src="写真/ジブリ展.jpg" alt="ジブリ展">
+    <img src="写真/渚紹介.jpg" alt="紹介">
   </div>
 
   <section>
     <h2>趣味一覧</h2>
-    <p>ここに趣味カードを追加できます。</p>
+    <div class="hobby-list">
+      <div class="card" data-modal="modal1">
+        <h2>映画鑑賞</h2>
+        <p>特に洋画のホラー映画が好きです。</p>
+        <img src="写真/へレディタリー.png" alt="ホラー映画のポスター">
+        <img src="写真/シャイニング.jpg" alt="ホラー映画のポスター">
+      </div>
+      <div class="card" data-modal="modal2">
+        <h2>フェス参戦</h2>
+        <p>音楽フェスに行って盛り上がるのが最高です！</p>
+        <img src="写真/フェスふぉと.jpg" alt="フェスの様子">
+      </div>
+    </div>
+    <div style="text-align:center;">
+      <a href="#more" class="neon-btn">もっと見る</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>ひとこと</h2>
+    <p>趣味を通じて、たくさんの人と関わるのが大好きです。</p>
   </section>
 </main>
 
@@ -114,5 +249,46 @@
   © 2025 渚の趣味サイト | おしゃれにしてみました！
 </footer>
 
+<!-- モーダル -->
+<div class="modal" id="modal1">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>映画鑑賞について</h2>
+    <p>洋画ホラーの中でもA24の作品が大好き！ストーリーや演出がとても深くて何度見ても飽きません。</p>
+  </div>
+</div>
+
+<div class="modal" id="modal2">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>フェス参戦について</h2>
+    <p>友達と行く音楽フェスやライブは最高の思い出です。毎年どこかのフェスやライブに行って、汗だくで盛り上がってます！</p>
+  </div>
+</div>
+
+<script>
+  // モーダル表示
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => {
+      const modalId = card.getAttribute('data-modal');
+      document.getElementById(modalId).style.display = 'block';
+    });
+  });
+
+  document.querySelectorAll('.close').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.closest('.modal').style.display = 'none';
+    });
+  });
+
+  window.addEventListener('click', e => {
+    if (e.target.classList.contains('modal')) {
+      e.target.style.display = 'none';
+    }
+  });
+</script>
+
 </body>
 </html>
+
+
