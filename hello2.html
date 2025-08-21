@@ -1,259 +1,79 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>趣味紹介</title>
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      cursor: url(https://cur.cursors-4u.net/games/gam-10/gam987.ani),
-              url(https://cur.cursors-4u.net/games/gam-10/gam987.png), auto !important;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>趣味紹介</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  background: linear-gradient(to right, #dff9fb, #74b9ff);
+  margin:0; padding:0; color:#2d3436; overflow-x:hidden;
+}
+header {
+  background-color:#74b9ff; padding:3rem 1rem; text-align:center; color:white;
+}
+header h1{ font-size:2.5rem; margin-bottom:0.5rem; }
+main{ max-width:900px; margin:3rem auto; padding:2rem; text-align:center; }
+h2{ color:#0984e3; border-bottom:2px solid #0984e3; padding-bottom:0.5rem; margin-bottom:1.5rem; }
 
-    body {
-      font-family: 'Zen Kaku Gothic New', sans-serif;
-      background: linear-gradient(to right, #dff9fb, #74b9ff);
-      margin: 0;
-      padding: 0;
-      color: #2d3436;
-      animation: fadeInBody 1s ease-in;
-      overflow-x: hidden;
-    }
+.slider-container {
+  position: relative; overflow: hidden; margin-bottom:2rem;
+}
+.slider-track {
+  display:flex; gap:2rem; transition: 0.5s ease;
+  scroll-behavior: smooth;
+}
+.main-img-frame{
+  flex:0 0 auto;
+  padding:12px; background:#fff; border:4px solid #ddd;
+  border-radius:8px; box-shadow:4px 6px 15px rgba(0,0,0,0.3);
+  cursor:pointer;
+}
+.main-img-frame img{ max-width:300px; height:auto; display:block; border-radius:4px; }
 
-    @keyframes fadeInBody {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+.slider-btn{
+  position:absolute; top:50%; transform:translateY(-50%);
+  background:rgba(255,255,255,0.7); border:none; padding:1rem; cursor:pointer;
+  border-radius:50%; font-size:1.5rem; box-shadow:0 2px 8px rgba(0,0,0,0.3);
+  z-index:10;
+}
+.slider-btn:hover{ background:rgba(255,255,255,0.9); }
 
-    #cursor {
-      width: 20px;
-      height: 20px;
-      border: 2px solid #0984e3;
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s ease;
-    }
+.slider-btn.prev{ left:10px; }
+.slider-btn.next{ right:10px; }
 
-    #bg-rain {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
+.hobby-list{ display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
+.card{
+  background:#fff; padding:1rem; border-radius:16px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+  cursor:pointer;
+}
+.card img{ max-width:100%; border-radius:12px; margin-top:1rem; }
 
-    header {
-      background-color: #74b9ff;
-      padding: 3rem 1rem;
-      text-align: center;
-      color: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      position: relative;
-      overflow: hidden;
-    }
+.modal{
+  display:none; position:fixed; z-index:100; left:0; top:0;
+  width:100%; height:100%; background:rgba(0,0,0,0.6);
+}
+.modal-content{
+  background:white; margin:10% auto; padding:2rem; border-radius:10px;
+  width:80%; max-width:500px; position:relative;
+}
+.close{ position:absolute; top:0.5rem; right:1rem; font-size:1.8rem; cursor:pointer; color:#aaa; }
 
-    header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-    }
+footer{
+  text-align:center; font-size:0.9rem; color:#555; background:#f0f0f0; padding:1.5rem;
+  margin-top:4rem; border-top:1px solid #ccc;
+}
 
-    header::after {
-      content: "";
-      position: absolute;
-      bottom: -10px;
-      left: 0;
-      width: 100%;
-      height: 30px;
-      background: radial-gradient(circle, #74b9ff 20%, transparent 21%);
-      background-size: 30px 30px;
-      animation: wave 3s infinite linear;
-    }
-
-    @keyframes wave {
-      0% { background-position: 0 0; }
-      100% { background-position: 30px 0; }
-    }
-
-    main {
-      max-width: 900px;
-      margin: 3rem auto;
-      padding: 2rem;
-      animation: fadeInMain 1s ease-in-out;
-      text-align: center;
-    }
-
-    @keyframes fadeInMain {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h2 {
-      color: #0984e3;
-      border-bottom: 2px solid #0984e3;
-      padding-bottom: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    /* ★ 写真スライダー */
-    .slider-container {
-      overflow: hidden;
-      width: 100%;
-      margin: 2rem auto;
-    }
-    .slider-track {
-      display: flex;
-      gap: 2rem;
-      transition: transform 0.3s ease;
-    }
-    .main-img-frame {
-      flex: 0 0 auto;
-      padding: 12px;
-      background: #fff;
-      border: 4px solid #ddd;
-      border-radius: 8px;
-      box-shadow: 4px 6px 15px rgba(0,0,0,0.3);
-      transform: rotate(-2deg);
-      position: relative;
-      cursor: pointer;
-    }
-    .main-img-frame img {
-      max-width: 300px;
-      height: auto;
-      display: block;
-      border-radius: 4px;
-    }
-    /* 支えは削除 */
-    .main-img-frame::after { display: none; }
-
-    @media(max-width:768px){ 
-      .main-img-frame img{ max-width:80%; } 
-    }
-
-    .hobby-list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-    }
-
-    .card {
-      background-color: #fff;
-      padding: 1rem;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 0.6s ease forwards;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-    }
-
-    .card:nth-child(1) { animation-delay: 0s; }
-    .card:nth-child(2) { animation-delay: 0.3s; }
-
-    @keyframes fadeInUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
-      background-color: #dfefff;
-    }
-
-    .card img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 12px;
-      margin-top: 1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .card p {
-      margin-top: 0.5rem;
-      line-height: 1.6;
-    }
-
-    .neon-btn {
-      display: inline-block;
-      padding: 0.8rem 1.5rem;
-      color: #74b9ff;
-      border: 2px solid #74b9ff;
-      background-color: transparent;
-      border-radius: 8px;
-      font-weight: bold;
-      text-decoration: none;
-      box-shadow: 0 0 10px rgba(116, 185, 255, 0.5);
-      transition: all 0.3s ease;
-      margin-top: 2rem;
-    }
-
-    .neon-btn:hover {
-      background-color: #74b9ff;
-      color: white;
-      box-shadow: 0 0 20px #74b9ff, 0 0 40px #74b9ff;
-      cursor: pointer;
-    }
-
-    section:last-of-type {
-      margin-top: 4rem;
-      text-align: center;
-      font-size: 1.2rem;
-    }
-
-    footer {
-      text-align: center;
-      font-size: 0.9rem;
-      color: #555;
-      background-color: #f0f0f0;
-      padding: 1.5rem;
-      margin-top: 4rem;
-      border-top: 1px solid #ccc;
-    }
-
-    @media (max-width: 768px) {
-      .hobby-list {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 100;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-    }
-
-    .modal-content {
-      background-color: white;
-      margin: 10% auto;
-      padding: 2rem;
-      border-radius: 10px;
-      width: 80%;
-      max-width: 500px;
-      position: relative;
-    }
-
-    .close {
-      position: absolute;
-      top: 0.5rem;
-      right: 1rem;
-      font-size: 1.8rem;
-      cursor: pointer;
-      color: #aaa;
-    }
-  </style>
+@media (max-width:768px){
+  .hobby-list{ grid-template-columns:1fr; }
+  .main-img-frame img{ max-width:80%; }
+}
+</style>
 </head>
 <body>
-
-<canvas id="bg-rain"></canvas>
-<div id="cursor"></div>
 
 <header>
   <h1>私の趣味紹介</h1>
@@ -261,64 +81,52 @@
 </header>
 
 <main>
-  <!-- 写真スライダー -->
   <h2>写真ギャラリー</h2>
   <div class="slider-container">
-    <div class="slider-track" id="sliderTrack">
+    <button class="slider-btn prev">&#10094;</button>
+    <div class="slider-track">
       <div class="main-img-frame" data-description="雨晴海岸の写真"><img src="写真/雨晴.jpg" alt="雨晴海岸"></div>
       <div class="main-img-frame" data-description="フェスでの写真"><img src="写真/フェスふぉと.jpg" alt="フェス"></div>
       <div class="main-img-frame" data-description="映画ポスターの写真"><img src="写真/へレディタリー.png" alt="映画"></div>
     </div>
+    <button class="slider-btn next">&#10095;</button>
   </div>
 
   <section>
     <h2>趣味一覧</h2>
     <div class="hobby-list">
       <div class="card" data-modal="modal1">
-        <h2>映画鑑賞</h2>
+        <h3>映画鑑賞</h3>
         <p>特に洋画のホラー映画が好きです。</p>
         <img src="写真/へレディタリー.png" alt="ホラー映画のポスター">
         <img src="写真/シャイニング.jpg" alt="ホラー映画のポスター">
       </div>
       <div class="card" data-modal="modal2">
-        <h2>フェス参戦</h2>
+        <h3>フェス参戦</h3>
         <p>音楽フェスに行って盛り上がるのが最高です！</p>
         <img src="写真/フェスふぉと.jpg" alt="フェスの様子">
       </div>
     </div>
-    <div style="text-align:center;">
-      <a href="#more" class="neon-btn">もっと見る</a>
-    </div>
-  </section>
-
-  <section>
-    <h2>ひとこと</h2>
-    <p>趣味を通じて、たくさんの人と関わるのが大好きです。</p>
   </section>
 </main>
 
-<footer>
-  © 2025 渚の趣味サイト | おしゃれにしてみました！
-</footer>
+<footer>© 2025 渚の趣味サイト</footer>
 
-<!-- モーダル（趣味用） -->
 <div class="modal" id="modal1">
   <div class="modal-content">
     <span class="close">&times;</span>
-    <h2>映画鑑賞について</h2>
-    <p>洋画ホラーの中でもA24の作品が大好き！ストーリーや演出がとても深くて何度見ても飽きません。</p>
+    <h3>映画鑑賞について</h3>
+    <p>洋画ホラーの中でもA24の作品が大好き！何度見ても飽きません。</p>
   </div>
 </div>
-
 <div class="modal" id="modal2">
   <div class="modal-content">
     <span class="close">&times;</span>
-    <h2>フェス参戦について</h2>
-    <p>友達と行く音楽フェスやライブは最高の思い出です。毎年どこかのフェスやライブに行って、汗だくで盛り上がってます！</p>
+    <h3>フェス参戦について</h3>
+    <p>友達と行く音楽フェスやライブは最高の思い出です。</p>
   </div>
 </div>
 
-<!-- モーダル（写真用） -->
 <div class="modal" id="photoModal">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -327,114 +135,27 @@
 </div>
 
 <script>
-  // モーダル表示（趣味カード）
-  document.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('click', () => {
-      const modalId = card.getAttribute('data-modal');
-      document.getElementById(modalId).style.display = 'block';
-    });
-  });
-  document.querySelectorAll('.close').forEach(btn => {
-    btn.addEventListener('click', () => {
-      btn.closest('.modal').style.display = 'none';
-    });
-  });
-  window.addEventListener('click', e => {
-    if(e.target.classList.contains('modal')) e.target.style.display = 'none';
-  });
+// スライダー操作
+const track = document.querySelector('.slider-track');
+document.querySelector('.slider-btn.next').addEventListener('click',()=>{ track.scrollBy({left:320, behavior:'smooth'}); });
+document.querySelector('.slider-btn.prev').addEventListener('click',()=>{ track.scrollBy({left:-320, behavior:'smooth'}); });
 
-  // モーダル表示（写真スライダー）
-  document.querySelectorAll('.main-img-frame').forEach(frame => {
-    frame.addEventListener('click', () => {
-      const modal = document.getElementById('photoModal');
-      document.getElementById('photoDescription').textContent = frame.dataset.description;
-      modal.style.display = 'block';
-    });
+// カードモーダル
+document.querySelectorAll('.card').forEach(c=>{
+  c.addEventListener('click',()=>{ document.getElementById(c.dataset.modal).style.display='block'; });
+});
+
+// 写真モーダル
+document.querySelectorAll('.main-img-frame').forEach(f=>{
+  f.addEventListener('click',()=> {
+    document.getElementById('photoDescription').textContent=f.dataset.description;
+    document.getElementById('photoModal').style.display='block';
   });
+});
 
-  // マウスストーカー
-  const cursor = document.getElementById('cursor');
-  window.addEventListener('mousemove', e => {
-    cursor.style.left = `${e.clientX}px`;
-    cursor.style.top = `${e.clientY}px`;
-  });
-
-  // 雨＋波紋アニメーション
-  const canvas = document.getElementById("bg-rain");
-  const ctx = canvas.getContext("2d");
-  let W = window.innerWidth;
-  let H = window.innerHeight;
-  canvas.width = W;
-  canvas.height = H;
-  const drops = [];
-  const ripples = [];
-  for(let i=0;i<150;i++){
-    drops.push({x:Math.random()*W,y:Math.random()*H,l:Math.random()*1+1,xs:0,ys:Math.random()*4+4});
-  }
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    ctx.strokeStyle="#74b9ff";
-    ctx.lineWidth=1;
-    ctx.lineCap="round";
-    for(let i=0;i<drops.length;i++){
-      let d=drops[i];
-      ctx.beginPath();
-      ctx.moveTo(d.x,d.y);
-      ctx.lineTo(d.x+d.xs,d.y+d.l*d.ys);
-      ctx.stroke();
-    }
-    for(let i=0;i<drops.length;i++){
-      let d=drops[i];
-      d.y+=d.ys;
-      if(d.y>H){d.y=-20;d.x=Math.random()*W; ripples.push({x:d.x,y:H-2,r:0});}
-    }
-    ctx.strokeStyle="rgba(116,185,255,0.4)";
-    for(let i=0;i<ripples.length;i++){
-      const ripple=ripples[i];
-      ripple.r+=1;
-      ctx.beginPath();
-      ctx.arc(ripple.x,ripple.y,ripple.r,0,Math.PI*2);
-      ctx.stroke();
-      if(ripple.r>20) ripples.splice(i--,1);
-    }
-    requestAnimationFrame(draw);
-  }
-  draw();
-  window.addEventListener("resize",()=>{W=window.innerWidth; H=window.innerHeight; canvas.width=W; canvas.height=H;});
-
-  // スライダー自動ループ＋スワイプ
-  const track = document.getElementById('sliderTrack');
-  let isDown = false, startX, scrollLeft;
-  let scrollPos = 0;
-  const speed = 0.5;
-  function loopSlider(){
-    if(!isDown){
-      scrollPos += speed;
-      if(scrollPos >= track.scrollWidth/2) scrollPos = 0;
-      track.scrollLeft = scrollPos;
-    }
-    requestAnimationFrame(loopSlider);
-  }
-  loopSlider();
-
-  track.addEventListener('mousedown', e => { isDown=true; startX=e.pageX-track.offsetLeft; scrollLeft=track.scrollLeft; });
-  track.addEventListener('mouseleave', ()=>{ isDown=false; });
-  track.addEventListener('mouseup', ()=>{ isDown=false; });
-  track.addEventListener('mousemove', e => {
-    if(!isDown) return;
-    e.preventDefault();
-    const x=e.pageX-track.offsetLeft;
-    const walk=(x-startX)*2;
-    track.scrollLeft=scrollLeft-walk;
-  });
-
-  // スマホ用スワイプ
-  let startTouchX = 0, startScroll = 0;
-  track.addEventListener('touchstart', e => { startTouchX = e.touches[0].pageX; startScroll=track.scrollLeft; });
-  track.addEventListener('touchmove', e => {
-    const moveX = e.touches[0].pageX;
-    track.scrollLeft = startScroll - (moveX - startTouchX);
-  });
+// 閉じる
+document.querySelectorAll('.close').forEach(c=>{ c.addEventListener('click',()=>{ c.closest('.modal').style.display='none'; }); });
+window.addEventListener('click',e=>{ if(e.target.classList.contains('modal')) e.target.style.display='none'; });
 </script>
 
 </body>
