@@ -6,153 +6,43 @@
 <title>趣味紹介</title>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  * {
-    cursor: url(https://cur.cursors-4u.net/games/gam-10/gam987.ani),
-            url(https://cur.cursors-4u.net/games/gam-10/gam987.png), auto !important;
-    box-sizing: border-box;
-  }
+  * { box-sizing: border-box; cursor: url(https://cur.cursors-4u.net/games/gam-10/gam987.ani), url(https://cur.cursors-4u.net/games/gam-10/gam987.png), auto !important; }
+  body { font-family: 'Zen Kaku Gothic New', sans-serif; background: linear-gradient(to right, #dff9fb, #74b9ff); margin:0; padding:0; color:#2d3436; }
 
-  body {
-    font-family: 'Zen Kaku Gothic New', sans-serif;
-    background: linear-gradient(to right, #dff9fb, #74b9ff);
-    margin: 0;
-    padding: 0;
-    color: #2d3436;
-    animation: fadeInBody 1s ease-in;
-  }
+  #cursor { width:20px; height:20px; border:2px solid #0984e3; border-radius:50%; position:fixed; pointer-events:none; z-index:9999; transform:translate(-50%, -50%); transition:transform 0.1s ease; }
 
-  @keyframes fadeInBody { from { opacity: 0; } to { opacity: 1; } }
-
-  #cursor {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #0984e3;
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s ease;
-  }
-
-  header {
-    background-color: #74b9ff;
-    padding: 3rem 1rem;
-    text-align: center;
-    color: white;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    position: relative;
-    overflow: hidden;
-  }
-
+  header { background-color:#74b9ff; padding:3rem 1rem; text-align:center; color:white; position:relative; overflow:hidden; }
   header h1 { font-size:2.5rem; margin-bottom:0.5rem; }
-  header::after {
-    content:"";
-    position:absolute;
-    bottom:-10px;
-    left:0;
-    width:100%;
-    height:30px;
-    background: radial-gradient(circle, #74b9ff 20%, transparent 21%);
-    background-size:30px 30px;
-    animation: wave 3s infinite linear;
-  }
-  @keyframes wave { 0% { background-position:0 0;} 100% { background-position:30px 0;} }
+  header::after { content:""; position:absolute; bottom:-10px; left:0; width:100%; height:30px; background: radial-gradient(circle, #74b9ff 20%, transparent 21%); background-size:30px 30px; animation: wave 3s infinite linear; }
+  @keyframes wave { 0%{background-position:0 0;} 100%{background-position:30px 0;} }
 
-  main { max-width:900px; margin:3rem auto; padding:2rem; animation:fadeInMain 1s ease-in-out; text-align:center; }
-  @keyframes fadeInMain { from { opacity:0; transform:translateY(20px);} to { opacity:1; transform:translateY(0); } }
-
-  h2 {
-    color: #0984e3;
-    border-bottom: 2px solid #0984e3;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1.5rem;
-  }
+  main { max-width:900px; margin:3rem auto; padding:2rem; text-align:center; }
+  h2 { color:#0984e3; border-bottom:2px solid #0984e3; padding-bottom:0.5rem; margin-bottom:1.5rem; }
 
   /* 横スライダー */
-  .main-img-slider {
-    overflow: hidden;
-    width: 100%;
-    margin: 2rem 0;
-    position: relative;
-  }
-
-  .main-img-track {
-    display: flex;
-    gap: 2rem;
-    cursor: grab;
-    user-select: none;
-    transition: transform 0.3s ease;
-    width: max-content;
-  }
-
-  .main-img-frame {
-    flex: 0 0 auto;
-    padding: 12px;
-    background: #fff;
-    border: 4px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 4px 6px 15px rgba(0,0,0,0.3);
-    transform: rotate(-2deg);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .main-img-frame img {
-    max-width: 200px;
-    height: auto;
-    border-radius: 4px;
-    display: block;
-    transition: transform 0.3s ease;
-  }
-
-  .main-img-frame:hover {
-    transform: rotate(0deg) scale(1.05);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.3);
-  }
-
+  .main-img-slider { overflow:hidden; width:100%; margin:2rem 0; position:relative; }
+  .main-img-track { display:flex; gap:2rem; cursor:grab; user-select:none; transition: transform 0.3s ease; }
+  .main-img-frame { flex:0 0 auto; padding:12px; background:#fff; border:4px solid #ddd; border-radius:8px; box-shadow:4px 6px 15px rgba(0,0,0,0.3); transform:rotate(-2deg); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .main-img-frame img { max-width:200px; height:auto; border-radius:4px; display:block; transition: transform 0.3s ease; }
+  .main-img-frame:hover { transform:rotate(0deg) scale(1.05); box-shadow:0 12px 24px rgba(0,0,0,0.3); }
   .main-img-frame:hover img { transform: scale(1.05); }
 
   /* 趣味カード */
   .hobby-list { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
-  .card {
-    background-color:#fff; padding:1rem; border-radius:16px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.1);
-    opacity:0; transform:translateY(30px);
-    animation:fadeInUp 0.6s ease forwards;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor:pointer;
-  }
-  .card:nth-child(1) { animation-delay:0s; }
-  .card:nth-child(2) { animation-delay:0.3s; }
-  @keyframes fadeInUp { to { opacity:1; transform:translateY(0);} }
+  .card { background-color:#fff; padding:1rem; border-radius:16px; box-shadow:0 4px 12px rgba(0,0,0,0.1); cursor:pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
   .card:hover { transform:translateY(-8px) scale(1.02); box-shadow:0 10px 24px rgba(0,0,0,0.15); background-color:#dfefff; }
   .card img { max-width:100%; height:auto; border-radius:12px; margin-top:1rem; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
-  .card p { margin-top:0.5rem; line-height:1.6; }
 
-  .neon-btn {
-    display:inline-block; padding:0.8rem 1.5rem;
-    color:#74b9ff; border:2px solid #74b9ff;
-    background-color:transparent; border-radius:8px;
-    font-weight:bold; text-decoration:none;
-    box-shadow:0 0 10px rgba(116,185,255,0.5);
-    transition: all 0.3s ease; margin-top:2rem;
-  }
-  .neon-btn:hover { background-color:#74b9ff; color:white; box-shadow:0 0 20px #74b9ff,0 0 40px #74b9ff; cursor:pointer; }
-
-  section:last-of-type { margin-top:4rem; text-align:center; font-size:1.2rem; }
-  footer { text-align:center; font-size:0.9rem; color:#555; background-color:#f0f0f0; padding:1.5rem; margin-top:4rem; border-top:1px solid #ccc; }
-
-  @media(max-width:768px){ .hobby-list{grid-template-columns:1fr;} .main-img-frame img{max-width:80%;} }
-
-  /* モーダル */
-  .modal { display:none; position:fixed; z-index:100; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6);}
-  .modal-content { background-color:white; margin:10% auto; padding:2rem; border-radius:10px; width:80%; max-width:500px; position:relative;}
+  .modal { display:none; position:fixed; z-index:100; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); }
+  .modal-content { background:white; margin:10% auto; padding:2rem; border-radius:10px; width:80%; max-width:500px; position:relative; }
   .close { position:absolute; top:0.5rem; right:1rem; font-size:1.8rem; cursor:pointer; color:#aaa; }
 
+  footer { text-align:center; font-size:0.9rem; color:#555; background:#f0f0f0; padding:1.5rem; margin-top:4rem; border-top:1px solid #ccc; }
+
+  @media(max-width:768px){ .hobby-list{grid-template-columns:1fr;} .main-img-frame img{max-width:80%;} }
 </style>
 </head>
 <body>
-
 <div id="cursor"></div>
 
 <header>
@@ -169,12 +59,6 @@
       <div class="main-img-frame" data-description="映画館で見たお気に入りの映画ポスターです。"><img src="写真/へレディタリー.png" alt="映画"></div>
       <div class="main-img-frame" data-description="青い海で撮った写真です。"><img src="写真/雨晴.jpg" alt="海"></div>
       <div class="main-img-frame" data-description="山や自然の景色の写真です。"><img src="写真/フェスふぉと.jpg" alt="風景"></div>
-      <!-- 複製 -->
-      <div class="main-img-frame" data-description="雨晴海岸の美しい景色です。"><img src="写真/雨晴.jpg" alt="雨晴海岸"></div>
-      <div class="main-img-frame" data-description="音楽フェスで友達と盛り上がった写真です。"><img src="写真/フェスふぉと.jpg" alt="フェス"></div>
-      <div class="main-img-frame" data-description="映画館で見たお気に入りの映画ポスターです。"><img src="写真/へレディタリー.png" alt="映画"></div>
-      <div class="main-img-frame" data-description="青い海で撮った写真です。"><img src="写真/雨晴.jpg" alt="海"></div>
-      <div class="main-img-frame" data-description="山や自然の景色の写真です。"><img src="写真/フェスふぉと.jpg" alt="風景"></div>
     </div>
   </div>
 
@@ -184,20 +68,20 @@
       <div class="card" data-modal="modal1">
         <h2>映画鑑賞</h2>
         <p>特に洋画のホラー映画が好きです。</p>
-        <img src="写真/へレディタリー.png" alt="ホラー映画のポスター">
-        <img src="写真/シャイニング.jpg" alt="ホラー映画のポスター">
+        <img src="写真/へレディタリー.png" alt="ホラー映画">
+        <img src="写真/シャイニング.jpg" alt="ホラー映画">
       </div>
       <div class="card" data-modal="modal2">
         <h2>フェス参戦</h2>
         <p>音楽フェスに行って盛り上がるのが最高です！</p>
-        <img src="写真/フェスふぉと.jpg" alt="フェスの様子">
+        <img src="写真/フェスふぉと.jpg" alt="フェス">
       </div>
     </div>
   </section>
 </main>
 
 <footer>
-  © 2025 渚の趣味サイト | おしゃれにしてみました！
+  © 2025 渚の趣味サイト
 </footer>
 
 <!-- モーダル -->
@@ -205,18 +89,17 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>映画鑑賞について</h2>
-    <p>洋画ホラーの中でもA24の作品が大好き！ストーリーや演出が深くて何度見ても飽きません。</p>
+    <p>洋画ホラーの中でもA24の作品が大好き！何度見ても飽きません。</p>
   </div>
 </div>
 <div class="modal" id="modal2">
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>フェス参戦について</h2>
-    <p>友達と行く音楽フェスやライブは最高の思い出です。毎年どこかのフェスやライブに行って盛り上がっています！</p>
+    <p>友達と行く音楽フェスやライブは最高の思い出です。</p>
   </div>
 </div>
 
-<!-- 写真説明モーダル -->
 <div class="modal" id="photoModal">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -225,82 +108,58 @@
 </div>
 
 <script>
-  // カスタムカーソル
+  // カーソル
   const cursor = document.getElementById('cursor');
-  window.addEventListener('mousemove', e => {
-    cursor.style.left = `${e.clientX}px`;
-    cursor.style.top = `${e.clientY}px`;
-  });
+  window.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
 
   // 趣味カードモーダル
   document.querySelectorAll('.card').forEach(card => {
     card.addEventListener('click', () => {
-      const modalId = card.getAttribute('data-modal');
-      document.getElementById(modalId).style.display = 'block';
+      const modal = document.getElementById(card.dataset.modal);
+      modal.style.display='block';
     });
   });
 
   // 写真説明モーダル
-  document.querySelectorAll('.main-img-frame').forEach(frame => {
-    frame.addEventListener('click', () => {
-      const desc = frame.getAttribute('data-description');
-      document.getElementById('photoDescription').textContent = desc;
-      document.getElementById('photoModal').style.display = 'block';
+  document.querySelectorAll('.main-img-frame').forEach(frame=>{
+    frame.addEventListener('click', ()=>{
+      document.getElementById('photoDescription').textContent = frame.dataset.description;
+      document.getElementById('photoModal').style.display='block';
     });
   });
 
   // モーダル閉じる
-  document.querySelectorAll('.close').forEach(btn => {
-    btn.addEventListener('click', () => {
-      btn.closest('.modal').style.display = 'none';
-    });
+  document.querySelectorAll('.close').forEach(btn=>{
+    btn.addEventListener('click', ()=>btn.closest('.modal').style.display='none');
   });
-  window.addEventListener('click', e => {
-    if(e.target.classList.contains('modal')) e.target.style.display='none';
-  });
+  window.addEventListener('click', e=>{ if(e.target.classList.contains('modal')) e.target.style.display='none'; });
 
-  // スライダー
+  // スライダー自動ループ＋ドラッグ対応
   const track = document.getElementById('sliderTrack');
-  let isDown = false, startX, scrollLeft;
-  const autoScrollSpeed = 0.5;
+  // 複製してループ用
+  track.innerHTML += track.innerHTML;
 
-  // マウスドラッグ
-  track.addEventListener('mousedown', e => {
-    isDown = true;
-    startX = e.pageX - track.offsetLeft;
-    scrollLeft = track.scrollLeft;
-    track.style.cursor='grabbing';
-  });
+  let scrollPos = 0, speed = 0.5;
+  function loopScroll(){
+    scrollPos += speed;
+    if(scrollPos >= track.scrollWidth / 2) scrollPos = 0;
+    track.scrollLeft = scrollPos;
+    requestAnimationFrame(loopScroll);
+  }
+  loopScroll();
+
+  // ドラッグ
+  let isDown = false, startX, scrollLeft;
+  track.addEventListener('mousedown', e=>{ isDown=true; startX=e.pageX - track.offsetLeft; scrollLeft=track.scrollLeft; track.style.cursor='grabbing'; });
   track.addEventListener('mouseup', ()=>{ isDown=false; track.style.cursor='grab'; });
   track.addEventListener('mouseleave', ()=>{ isDown=false; track.style.cursor='grab'; });
   track.addEventListener('mousemove', e=>{
     if(!isDown) return;
     e.preventDefault();
     const x = e.pageX - track.offsetLeft;
-    track.scrollLeft = scrollLeft - (x - startX);
+    const walk = (x - startX) * 2;
+    track.scrollLeft = scrollLeft - walk;
   });
-
-  // タッチ対応
-  track.addEventListener('touchstart', e => {
-    isDown = true;
-    startX = e.touches[0].pageX - track.offsetLeft;
-    scrollLeft = track.scrollLeft;
-  });
-  track.addEventListener('touchmove', e => {
-    if(!isDown) return;
-    const x = e.touches[0].pageX - track.offsetLeft;
-    track.scrollLeft = scrollLeft - (x - startX);
-  });
-  track.addEventListener('touchend', ()=>{ isDown=false; });
-
-  // 自動スクロール
-  function autoScroll(){
-    track.scrollLeft += autoScrollSpeed;
-    if(track.scrollLeft >= track.scrollWidth/2) track.scrollLeft = 0;
-    requestAnimationFrame(autoScroll);
-  }
-  autoScroll();
 </script>
-
 </body>
 </html>
