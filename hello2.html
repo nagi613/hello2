@@ -95,6 +95,16 @@
       margin-bottom: 1.5rem;
     }
 
+    /* ★ 雨晴.jpg のスタイル */
+    .main-img {
+      display: block;
+      max-width: 80%;
+      height: auto;
+      margin: 0 auto 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
     .hobby-list {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -224,7 +234,8 @@
 </header>
 
 <main>
-  <img src="写真/雨晴.jpg" alt="ホラー映画のポスター">
+  <!-- 雨晴.jpg にクラス main-img を適用 -->
+  <img src="写真/雨晴.jpg" alt="雨晴海岸の写真" class="main-img">
   <section>
     <h2>趣味一覧</h2>
     <div class="hobby-list">
@@ -237,7 +248,7 @@
       <div class="card" data-modal="modal2">
         <h2>フェス参戦</h2>
         <p>音楽フェスに行って盛り上がるのが最高です！</p>
-        <img src="写真\フェスふぉと.jpg" alt="フェスの様子">
+        <img src="写真/フェスふぉと.jpg" alt="フェスの様子">
       </div>
     </div>
     <div style="text-align:center;">
@@ -366,9 +377,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
