@@ -96,7 +96,15 @@
       margin-bottom: 1.5rem;
     }
 
-    /* ★ 写真立て風の枠 */
+    /* 横並び写真立て */
+    .main-img-frames {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
     .main-img-frame {
       display: inline-block;
       padding: 12px;
@@ -104,23 +112,23 @@
       border: 4px solid #ddd;
       border-radius: 8px;
       box-shadow: 4px 6px 15px rgba(0,0,0,0.3);
-      transform: rotate(-2deg); /* 少し傾けてリアル感 */
-      margin: 2rem auto;
+      transform: rotate(-2deg);
       position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .main-img-frame img {
-      max-width: 300px; /* 写真の大きさを固定気味に */
+      max-width: 200px;
       height: auto;
       border-radius: 4px;
       display: block;
+      transition: transform 0.3s ease;
     }
 
-    /* ★ 写真立ての支え */
     .main-img-frame::after {
       content: "";
       position: absolute;
-      bottom: -40px;
+      bottom: -20px;
       left: 50%;
       transform: translateX(-50%) rotate(8deg);
       width: 60px;
@@ -130,6 +138,16 @@
       box-shadow: 2px 4px 8px rgba(0,0,0,0.4);
     }
 
+    .main-img-frame:hover {
+      transform: rotate(0deg) scale(1.05);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+    }
+
+    .main-img-frame:hover img {
+      transform: scale(1.05);
+    }
+
+    /* 趣味カード */
     .hobby-list {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -151,9 +169,7 @@
     .card:nth-child(1) { animation-delay: 0s; }
     .card:nth-child(2) { animation-delay: 0.3s; }
 
-    @keyframes fadeInUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
     .card:hover {
       transform: translateY(-8px) scale(1.02);
@@ -212,14 +228,11 @@
     }
 
     @media (max-width: 768px) {
-      .hobby-list {
-        grid-template-columns: 1fr;
-      }
-      .main-img-frame img {
-        max-width: 80%; /* スマホでは広めに */
-      }
+      .hobby-list { grid-template-columns: 1fr; }
+      .main-img-frame img { max-width: 80%; }
     }
 
+    /* モーダル */
     .modal {
       display: none;
       position: fixed;
@@ -249,162 +262,165 @@
       cursor: pointer;
       color: #aaa;
     }
+
   </style>
 </head>
 <body>
+  <canvas id="bg-rain"></canvas>
+  <div id="cursor"></div>
 
-<canvas id="bg-rain"></canvas>
-<div id="cursor"></div>
+  <header>
+    <h1>私の趣味紹介</h1>
+    <p>私の好きなことを紹介します！</p>
+  </header>
 
-<header>
-  <h1>私の趣味紹介</h1>
-  <p>私の好きなことを紹介します！</p>
-</header>
-
-<main>
-  <!-- 写真立て風に変更 -->
-  <div class="main-img-frame">
-    <img src="写真/雨晴.jpg" alt="雨晴海岸の写真">
-  </div>
-
-  <section>
-    <h2>趣味一覧</h2>
-    <div class="hobby-list">
-      <div class="card" data-modal="modal1">
-        <h2>映画鑑賞</h2>
-        <p>特に洋画のホラー映画が好きです。</p>
-        <img src="写真/へレディタリー.png" alt="ホラー映画のポスター">
-        <img src="写真/シャイニング.jpg" alt="ホラー映画のポスター">
-      </div>
-      <div class="card" data-modal="modal2">
-        <h2>フェス参戦</h2>
-        <p>音楽フェスに行って盛り上がるのが最高です！</p>
-        <img src="写真/フェスふぉと.jpg" alt="フェスの様子">
-      </div>
+  <main>
+    <!-- 横並び写真立て -->
+    <div class="main-img-frames">
+      <div class="main-img-frame"><img src="写真/雨晴.jpg" alt="雨晴海岸の写真"></div>
+      <div class="main-img-frame"><img src="写真/フェス.jpg" alt="フェスの写真"></div>
+      <div class="main-img-frame"><img src="写真/映画.jpg" alt="映画の写真"></div>
+      <div class="main-img-frame"><img src="写真/海.jpg" alt="海の写真"></div>
+      <div class="main-img-frame"><img src="写真/風景.jpg" alt="風景の写真"></div>
     </div>
-    <div style="text-align:center;">
-      <a href="#more" class="neon-btn">もっと見る</a>
+
+    <section>
+      <h2>趣味一覧</h2>
+      <div class="hobby-list">
+        <div class="card" data-modal="modal1">
+          <h2>映画鑑賞</h2>
+          <p>特に洋画のホラー映画が好きです。</p>
+          <img src="写真/へレディタリー.png" alt="ホラー映画のポスター">
+          <img src="写真/シャイニング.jpg" alt="ホラー映画のポスター">
+        </div>
+        <div class="card" data-modal="modal2">
+          <h2>フェス参戦</h2>
+          <p>音楽フェスに行って盛り上がるのが最高です！</p>
+          <img src="写真/フェスふぉと.jpg" alt="フェスの様子">
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <a href="#more" class="neon-btn">もっと見る</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>ひとこと</h2>
+      <p>趣味を通じて、たくさんの人と関わるのが大好きです。</p>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 渚の趣味サイト | おしゃれにしてみました！
+  </footer>
+
+  <!-- モーダル -->
+  <div class="modal" id="modal1">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>映画鑑賞について</h2>
+      <p>洋画ホラーの中でもA24の作品が大好き！ストーリーや演出がとても深くて何度見ても飽きません。</p>
     </div>
-  </section>
-
-  <section>
-    <h2>ひとこと</h2>
-    <p>趣味を通じて、たくさんの人と関わるのが大好きです。</p>
-  </section>
-</main>
-
-<footer>
-  © 2025 渚の趣味サイト | おしゃれにしてみました！
-</footer>
-
-<div class="modal" id="modal1">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>映画鑑賞について</h2>
-    <p>洋画ホラーの中でもA24の作品が大好き！ストーリーや演出がとても深くて何度見ても飽きません。</p>
   </div>
-</div>
-
-<div class="modal" id="modal2">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>フェス参戦について</h2>
-    <p>友達と行く音楽フェスやライブは最高の思い出です。毎年どこかのフェスやライブに行って、汗だくで盛り上がってます！</p>
+  <div class="modal" id="modal2">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>フェス参戦について</h2>
+      <p>友達と行く音楽フェスやライブは最高の思い出です。毎年どこかのフェスやライブに行って、汗だくで盛り上がってます！</p>
+    </div>
   </div>
-</div>
 
-<script>
-  // モーダル表示
-  document.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('click', () => {
-      const modalId = card.getAttribute('data-modal');
-      document.getElementById(modalId).style.display = 'block';
+  <script>
+    // モーダル表示
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => {
+        const modalId = card.getAttribute('data-modal');
+        document.getElementById(modalId).style.display = 'block';
+      });
     });
-  });
-  document.querySelectorAll('.close').forEach(btn => {
-    btn.addEventListener('click', () => {
-      btn.closest('.modal').style.display = 'none';
+    document.querySelectorAll('.close').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.closest('.modal').style.display = 'none';
+      });
     });
-  });
-  window.addEventListener('click', e => {
-    if (e.target.classList.contains('modal')) {
-      e.target.style.display = 'none';
-    }
-  });
-
-  // マウスストーカー
-  const cursor = document.getElementById('cursor');
-  window.addEventListener('mousemove', e => {
-    cursor.style.left = `${e.clientX}px`;
-    cursor.style.top = `${e.clientY}px`;
-  });
-
-  // 雨＋波紋アニメーション
-  const canvas = document.getElementById("bg-rain");
-  const ctx = canvas.getContext("2d");
-  let W = window.innerWidth;
-  let H = window.innerHeight;
-  canvas.width = W;
-  canvas.height = H;
-  const drops = [];
-  const ripples = [];
-
-  for (let i = 0; i < 150; i++) {
-    drops.push({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      l: Math.random() * 1 + 1,
-      xs: 0,
-      ys: Math.random() * 4 + 4,
-    });
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    ctx.strokeStyle = "#74b9ff";
-    ctx.lineWidth = 1;
-    ctx.lineCap = "round";
-
-    for (let i = 0; i < drops.length; i++) {
-      let d = drops[i];
-      ctx.beginPath();
-      ctx.moveTo(d.x, d.y);
-      ctx.lineTo(d.x + d.xs, d.y + d.l * d.ys);
-      ctx.stroke();
-    }
-
-    for (let i = 0; i < drops.length; i++) {
-      let d = drops[i];
-      d.y += d.ys;
-      if (d.y > H) {
-        d.y = -20;
-        d.x = Math.random() * W;
-        ripples.push({ x: d.x, y: H - 2, r: 0 });
+    window.addEventListener('click', e => {
+      if (e.target.classList.contains('modal')) {
+        e.target.style.display = 'none';
       }
-    }
+    });
 
-    ctx.strokeStyle = "rgba(116,185,255,0.4)";
-    for (let i = 0; i < ripples.length; i++) {
-      const ripple = ripples[i];
-      ripple.r += 1;
-      ctx.beginPath();
-      ctx.arc(ripple.x, ripple.y, ripple.r, 0, Math.PI * 2);
-      ctx.stroke();
-      if (ripple.r > 20) ripples.splice(i--, 1);
-    }
+    // マウスストーカー
+    const cursor = document.getElementById('cursor');
+    window.addEventListener('mousemove', e => {
+      cursor.style.left = `${e.clientX}px`;
+      cursor.style.top = `${e.clientY}px`;
+    });
 
-    requestAnimationFrame(draw);
-  }
-
-  draw();
-
-  window.addEventListener("resize", () => {
-    W = window.innerWidth;
-    H = window.innerHeight;
+    // 雨＋波紋アニメーション
+    const canvas = document.getElementById("bg-rain");
+    const ctx = canvas.getContext("2d");
+    let W = window.innerWidth;
+    let H = window.innerHeight;
     canvas.width = W;
     canvas.height = H;
-  });
-</script>
+    const drops = [];
+    const ripples = [];
 
+    for (let i = 0; i < 150; i++) {
+      drops.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        l: Math.random() * 1 + 1,
+        xs: 0,
+        ys: Math.random() * 4 + 4,
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.strokeStyle = "#74b9ff";
+      ctx.lineWidth = 1;
+      ctx.lineCap = "round";
+
+      for (let i = 0; i < drops.length; i++) {
+        let d = drops[i];
+        ctx.beginPath();
+        ctx.moveTo(d.x, d.y);
+        ctx.lineTo(d.x + d.xs, d.y + d.l * d.ys);
+        ctx.stroke();
+      }
+
+      for (let i = 0; i < drops.length; i++) {
+        let d = drops[i];
+        d.y += d.ys;
+        if (d.y > H) {
+          d.y = -20;
+          d.x = Math.random() * W;
+          ripples.push({ x: d.x, y: H - 2, r: 0 });
+        }
+      }
+
+      ctx.strokeStyle = "rgba(116,185,255,0.4)";
+      for (let i = 0; i < ripples.length; i++) {
+        const ripple = ripples[i];
+        ripple.r += 1;
+        ctx.beginPath();
+        ctx.arc(ripple.x, ripple.y, ripple.r, 0, Math.PI * 2);
+        ctx.stroke();
+        if (ripple.r > 20) ripples.splice(i--, 1);
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    window.addEventListener("resize", () => {
+      W = window.innerWidth;
+      H = window.innerHeight;
+      canvas.width = W;
+      canvas.height = H;
+    });
+  </script>
 </body>
 </html>
