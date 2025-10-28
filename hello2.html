@@ -3,32 +3,86 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>趣味紹介</title>
+  <title>渚の趣味サイト</title>
   <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
   <style>
     * {
+      box-sizing: border-box;
       cursor: url(https://cur.cursors-4u.net/games/gam-10/gam987.ani),
               url(https://cur.cursors-4u.net/games/gam-10/gam987.png), auto !important;
     }
+
     body {
       font-family: 'Zen Kaku Gothic New', sans-serif;
-      background: linear-gradient(to right, #dff9fb, #74b9ff);
+      background: linear-gradient(120deg, #dff9fb, #a29bfe, #74b9ff);
+      background-size: 400% 400%;
+      animation: gradientMove 10s ease infinite;
       margin: 0;
       padding: 0;
       color: #2d3436;
     }
 
-    header {
-      background-color: #74b9ff;
-      padding: 3rem 1rem;
-      text-align: center;
-      color: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-    main { max-width: 900px; margin: 3rem auto; padding: 2rem; text-align: center; }
-    h2 { color: #0984e3; border-bottom: 2px solid #0984e3; padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+    header {
+      position: relative;
+      background: linear-gradient(135deg, #74b9ff, #0984e3);
+      color: white;
+      padding: 4rem 1rem;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.2), transparent 70%);
+      animation: floatLight 10s infinite linear;
+    }
+
+    @keyframes floatLight {
+      0% { transform: translate(0,0) rotate(0deg); }
+      100% { transform: translate(50%,50%) rotate(360deg); }
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 3px;
+      text-shadow: 0 0 12px rgba(255,255,255,0.6);
+    }
+
+    main {
+      max-width: 950px;
+      margin: 3rem auto;
+      padding: 2rem;
+      text-align: center;
+      backdrop-filter: blur(15px);
+      background: rgba(255,255,255,0.6);
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      color: #0984e3;
+      border-bottom: 2px solid #0984e3;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
 
     .main-img-frame {
       display: flex;
@@ -40,109 +94,106 @@
     }
 
     .main-img-frame img {
-      width: 300px; height: 200px;
+      width: 300px;
+      height: 200px;
       object-fit: cover;
-      border-radius: 8px;
-      box-shadow: 4px 6px 15px rgba(0,0,0,0.3);
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
       scroll-snap-align: start;
-      transition: transform 0.3s ease;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
       flex-shrink: 0;
     }
 
-    .main-img-frame img:hover { transform: scale(1.05); }
+    .main-img-frame img:hover {
+      transform: scale(1.08) rotate(-1deg);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
 
     .hobby-list {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 2rem;
     }
 
     .card {
-      background-color: #fff;
-      padding: 1rem;
+      background: rgba(255,255,255,0.8);
+      padding: 1.5rem;
       border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      backdrop-filter: blur(10px);
       cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+      overflow: hidden;
     }
 
+    .card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(120deg, rgba(255,255,255,0.5), transparent);
+      transform: skewX(-25deg);
+      transition: 0.6s;
+    }
+
+    .card:hover::after { left: 125%; }
     .card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.15);
-      background-color: #dfefff;
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.25);
     }
 
     .card img {
-      width: 100%; height: 150px;
+      width: 100%;
+      height: 160px;
       object-fit: cover;
       border-radius: 12px;
       margin-top: 1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
     .card p { margin-top: 0.5rem; line-height: 1.6; }
 
     .neon-btn {
       display: inline-block;
-      padding: 0.8rem 1.5rem;
-      color: #74b9ff;
-      border: 2px solid #74b9ff;
-      background-color: transparent;
-      border-radius: 8px;
+      padding: 0.9rem 2rem;
+      color: #0984e3;
+      border: 2px solid #0984e3;
+      border-radius: 10px;
       font-weight: bold;
       text-decoration: none;
-      box-shadow: 0 0 10px rgba(116, 185, 255, 0.5);
-      transition: all 0.3s ease;
-      margin-top: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: 0.4s;
     }
 
-    .neon-btn:hover {
-      background-color: #74b9ff;
-      color: white;
-      box-shadow: 0 0 20px #74b9ff, 0 0 40px #74b9ff;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 100;
-      left: 0;
-      top: 0;
+    .neon-btn::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.6);
+      background: linear-gradient(120deg, transparent, rgba(9,132,227,0.3), transparent);
+      transition: 0.5s;
     }
 
-    .modal-content {
-      background-color: #ffffff;
-      margin: 10% auto;
-      padding: 2rem;
-      border-radius: 10px;
-      width: 80%;
-      max-width: 500px;
-      position: relative;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    .neon-btn:hover::before { left: 100%; }
+    .neon-btn:hover {
+      background-color: #0984e3;
+      color: #fff;
+      box-shadow: 0 0 15px #74b9ff, 0 0 30px #0984e3;
     }
-
-    .modal-content h2 { color: #0984e3; }
-    .close {
-      position: absolute;
-      top: 0.5rem;
-      right: 1rem;
-      font-size: 1.8rem;
-      cursor: pointer;
-      color: #aaa;
-    }
-    .close:hover { color: #0984e3; }
 
     footer {
       text-align: center;
       font-size: 0.9rem;
       color: #555;
-      background-color: #f0f0f0;
+      background: rgba(255,255,255,0.6);
       padding: 1.5rem;
       margin-top: 4rem;
       border-top: 1px solid #ccc;
+      backdrop-filter: blur(10px);
     }
 
     ::-webkit-scrollbar { height: 8px; }
@@ -150,58 +201,60 @@
     ::-webkit-scrollbar-thumb:hover { background-color: #74b9ff; }
 
     @media (max-width: 768px) {
-      .hobby-list { grid-template-columns: 1fr; }
       .main-img-frame img { width: 80%; height: auto; }
+    }
+
+    /* フェードインアニメーション */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s, transform 1s;
+    }
+    .fade-up.show {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>自己紹介！</h1>
-  <p>閲覧ありがとうございます！どうも！なぎさです！このサイトでは趣味や写真を掲載しています～！</p>
+  <h1>渚の趣味サイト</h1>
+  <p>どうも！なぎさです🌸 趣味や好きなことを詰め込んでみました！</p>
 </header>
 
 <main>
-  <!-- 写真ギャラリー -->
   <h2>ギャラリー</h2>
-  <div class="main-img-frame">
+  <div class="main-img-frame fade-up">
     <img src="写真/雨晴.jpg" alt="雨晴海岸">
     <img src="写真/ジブリ展.jpg" alt="ジブリ展">
     <img src="写真/渚紹介.jpg" alt="紹介">
     <img src="写真/ミリオン１.jpg" alt="フェス２">
   </div>
 
-  <!-- 趣味セクション -->
-  <section>
+  <section class="fade-up">
     <h2>趣味</h2>
     <div class="hobby-list">
       <div class="card" data-modal="modal1">
         <h2>映画鑑賞</h2>
-        <p>特に洋画のホラー映画が好きです。</p>
-        <img src="写真/へレディタリー.png" alt="ホラー映画のポスター">
-        <img src="写真/シャイニング.jpg" alt="ホラー映画のポスター">
+        <p>洋画ホラーが特に好きです🎬</p>
+        <img src="写真/へレディタリー.png" alt="ホラー映画">
       </div>
       <div class="card" data-modal="modal2">
         <h2>フェス参戦</h2>
-        <p>音楽フェスに行って盛り上がるのが最高です！</p>
-        <img src="写真/フェスふぉと.jpg" alt="フェスの様子">
-        <img src="写真/バニラズ.jpg" alt="ライブ１">
+        <p>音楽フェスで汗だくになるのが最高！🎶</p>
+        <img src="写真/フェスふぉと.jpg" alt="フェス">
       </div>
       <div class="card" data-modal="modal3">
         <h2>作品</h2>
-        <p>油絵を高校で3年間やってました！</p>
+        <p>高校で油絵を3年間やっていました🎨</p>
         <img src="写真/art1.png" alt="油絵１">
-        <img src="写真/art2.png" alt="油絵２">
       </div>
     </div>
-    <div style="text-align:center;">
-      <a href="#more" class="neon-btn">もっと見る</a>
-    </div>
+    <a href="#more" class="neon-btn">もっと見る</a>
   </section>
 
-  <!-- 検定・資格セクション -->
-  <section>
+  <section class="fade-up">
     <h2>検定・資格</h2>
     <div class="hobby-list">
       <div class="card" data-modal="modal3">
@@ -215,48 +268,15 @@
     </div>
   </section>
 
-  <section>
+  <section class="fade-up">
     <h2>ひとこと</h2>
-    <p>趣味を通じて、たくさんの人と関わるのが大好きです。</p>
+    <p>趣味を通じて、たくさんの人と関わるのが大好きです💬</p>
   </section>
 </main>
 
 <footer>
-  © 2025 渚の趣味サイト | おしゃれにしてみました！
+  © 2025 渚の趣味サイト | Design by Nagisa ✨
 </footer>
-
-<!-- モーダル -->
-<div class="modal" id="modal1">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>映画鑑賞について</h2>
-    <p>洋画ホラーの中でもA24の作品が大好き！ストーリーや演出がとても深くて何度見ても飽きません。</p>
-  </div>
-</div>
-
-<div class="modal" id="modal2">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>フェス参戦について</h2>
-    <p>友達と行く音楽フェスやライブは最高の思い出です。毎年どこかのフェスやライブに行って、汗だくで盛り上がってます！</p>
-  </div>
-</div>
-
-<div class="modal" id="modal3">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>取得済み検定</h2>
-    <p>・G検定：AIの基礎知識を学びました。<br>・基本情報技術者試験：IT基礎力取得済み。<br>・AI検定：AIの基礎理論と活用法を学習済み。</p>
-  </div>
-</div>
-
-<div class="modal" id="modal4">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>勉強中の試験</h2>
-    <p>・応用情報技術者試験：現在勉強中で、アルゴリズムやネットワークなどのスキルを磨いています。<br>・色彩検定３級：デザインにも興味があるため、勉強中！</p>
-  </div>
-</div>
 
 <script>
   // モーダル表示
@@ -278,11 +298,18 @@
       e.target.style.display = 'none';
     }
   });
+
+  // スクロールでフェードイン
+  const fadeUps = document.querySelectorAll('.fade-up');
+  window.addEventListener('scroll', () => {
+    fadeUps.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 100) {
+        el.classList.add('show');
+      }
+    });
+  });
 </script>
 
 </body>
 </html>
-
-
-
-
